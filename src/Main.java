@@ -3,7 +3,6 @@ import modelo.Acompanamiento;
 import modelo.Condimento;
 import modelo.Costeable;
 import modelo.Identificable;
-import modelo.Ingrediente;
 import modelo.Olla;
 import modelo.Pedido;
 import modelo.Proteina;

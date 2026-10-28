@@ -1,24 +1,18 @@
-
 package modelo;
 
 public abstract class Ingrediente implements Identificable, Costeable {
-    private final String codigo;
-    private String nombre;
-    private int gramos;
-    private double precioKilo;
-    private boolean fresco;
+    protected String codigo;
+    protected String nombre;
+    protected double gramos;
+    protected double precioKilo;
+    protected boolean fresco;
 
-    public Ingrediente(String codigo, String nombre, int gramos,
-                       double precioKilo, boolean fresco) {
-        if (codigo == null || codigo.trim().isEmpty()) {
-            throw new IllegalArgumentException("El código no puede estar vacío");
-        }
-
+    public Ingrediente(String codigo, String nombre, double gramos, double precioKilo, boolean fresco) {
         this.codigo = codigo;
-        setNombre(nombre);
-        setGramos(gramos);
-        setPrecioKilo(precioKilo);
-        setFresco(fresco);
+        this.nombre = nombre;
+        this.gramos = gramos;
+        this.precioKilo = precioKilo;
+        this.fresco = fresco;
     }
 
     @Override
@@ -30,7 +24,7 @@ public abstract class Ingrediente implements Identificable, Costeable {
         return nombre;
     }
 
-    public int getGramos() {
+    public double getGramos() {
         return gramos;
     }
 
@@ -42,51 +36,10 @@ public abstract class Ingrediente implements Identificable, Costeable {
         return fresco;
     }
 
-    public void setNombre(String nombre) {
-        if (nombre == null || nombre.trim().isEmpty()) {
-            throw new IllegalArgumentException("El nombre no puede estar vacío");
-        }
-        this.nombre = nombre;
-    }
-
-    public void setGramos(int gramos) {
-        if (gramos <= 0) {
-            throw new IllegalArgumentException(
-                    "Los gramos deben ser mayores que 0");
-        }
-        this.gramos = gramos;
-    }
-
-    public void setPrecioKilo(double precioKilo) {
-        if (precioKilo <= 0) {
-            throw new IllegalArgumentException(
-                    "El precio por kilo debe ser mayor que 0");
-        }
-        this.precioKilo = precioKilo;
-    }
-
-    public void setFresco(boolean fresco) {
-        this.fresco = fresco;
-    }
-
-    /** Costo en pesos según los gramos y el precio por kilo. */
     @Override
     public double calcularCosto() {
-        return gramos / 1000.0 * precioKilo;
+        return (this.gramos / 1000.0) * this.precioKilo;
     }
 
-    /** Minutos que el ingrediente necesita dentro de la olla. */
-    public abstract int minutosCoccion();
-
-    /** Categoría del ingrediente. */
-    public abstract String getCategoria();
-
-    @Override
-    public String obtenerFicha() {
-        return getCategoria() + " [" + codigo + "] " + nombre
-                + " - " + gramos + " g, $"
-                + String.format("%.0f", calcularCosto())
-                + ", " + minutosCoccion() + " min";
-    }
+    public abstract int getTiempoCoccion();
 }
-
